@@ -8,40 +8,40 @@ import operator
 import time
 import sys, os
 import matplotlib.pyplot as plt
-import hunspell
+from hunspell import Hunspell
 from string import ascii_uppercase
 
 class Application:
     def __init__(self):
-	self.directory = 'model'
-        self.hs = hunspell.HunSpell('/usr/share/hunspell/en_US.dic', '/usr/share/hunspell/en_US.aff')
+        self.directory = 'model'
+        self.hs = Hunspell('en_US', '/usr/share/hunspell/en_US.aff')
         self.vs = cv2.VideoCapture(0)
         self.current_image = None
         self.current_image2 = None
         
-        self.json_file = open(self.directory+"model-bw.json", "r")
+        self.json_file = open(self.directory+"/model-bw.json", "r")
         self.model_json = self.json_file.read()
         self.json_file.close()
         self.loaded_model = model_from_json(self.model_json)
-        self.loaded_model.load_weights(self.directory+"model-bw.h5")
+        self.loaded_model.load_weights(self.directory+"/model-bw.h5")
 
-        self.json_file_dru = open(self.directory+"model-bw_dru.json" , "r")
+        self.json_file_dru = open(self.directory+"/model-bw_dru.json" , "r")
         self.model_json_dru = self.json_file_dru.read()
         self.json_file_dru.close()
         self.loaded_model_dru = model_from_json(self.model_json_dru)
-        self.loaded_model_dru.load_weights("model-bw_dru.h5")
+        self.loaded_model_dru.load_weights("model/model-bw_dru.h5")
 
-        self.json_file_tkdi = open(self.directory+"model-bw_tkdi.json" , "r")
+        self.json_file_tkdi = open(self.directory+"/model-bw_tkdi.json" , "r")
         self.model_json_tkdi = self.json_file_tkdi.read()
         self.json_file_tkdi.close()
         self.loaded_model_tkdi = model_from_json(self.model_json_tkdi)
-        self.loaded_model_tkdi.load_weights(self.directory+"model-bw_tkdi.h5")
+        self.loaded_model_tkdi.load_weights(self.directory+"/model-bw_tkdi.h5")
 
-        self.json_file_smn = open(self.directory+"model-bw_smn.json" , "r")
+        self.json_file_smn = open(self.directory+"/model-bw_smn.json" , "r")
         self.model_json_smn = self.json_file_smn.read()
         self.json_file_smn.close()
         self.loaded_model_smn = model_from_json(self.model_json_smn)
-        self.loaded_model_smn.load_weights(self.directory+"model-bw_smn.h5")
+        self.loaded_model_smn.load_weights(self.directory+"/model-bw_smn.h5")
         
         self.ct = {}
         self.ct['blank'] = 0
@@ -243,20 +243,20 @@ class Application:
             self.str+=" "
             self.str+=predicts[1]
     def action3(self):
-    	predicts=self.hs.suggest(self.word)
-    	if(len(predicts) > 2):
+        predicts=self.hs.suggest(self.word)
+        if(len(predicts) > 2):
             self.word=""
             self.str+=" "
             self.str+=predicts[2]
     def action4(self):
-    	predicts=self.hs.suggest(self.word)
-    	if(len(predicts) > 3):
+        predicts=self.hs.suggest(self.word)
+        if(len(predicts) > 3):
             self.word=""
             self.str+=" "
             self.str+=predicts[3]
     def action5(self):
-    	predicts=self.hs.suggest(self.word)
-    	if(len(predicts) > 4):
+        predicts=self.hs.suggest(self.word)
+        if(len(predicts) > 4):
             self.word=""
             self.str+=" "
             self.str+=predicts[4]
